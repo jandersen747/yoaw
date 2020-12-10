@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset='utf-8'/>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+        <title class='title'></title>
+        <script src='./js/newQ.js'></script>
+        <script>
+
+
+            const readIncidents = function () {
+                // læs m ajax
+                let oReq = new XMLHttpRequest();
+                oReq.addEventListener("load", function () {
+                    let incidents = [];
+                    if (this.responseText.length > 0)
+                        incidents = JSON.parse(this.responseText); // get and objectify
+                        for (var i = 0; i < incidents.length; i++) {
+                            var mainContainer = document.getElementById("myData");
+                        /*document.write(`${incident.name}, ${incident.mobil}, ${incident.besked}, ${incident.need}`);*/
+                        var div = document.createElement("div");
+                        div.innerHTML = '<br>' + '<b>incident:</b> ' + '<br>' + '<br>' + '<b>Name:</b> ' + incidents[i].name + '<br>'
+                        + '<b>mobil: </b>' + incidents[i].mobil + '<br>'+ '<b>besked:</b> ' + incidents[i].besked + '<br>' + '<b>Fagperson:</b> ' + incidents[i].need + '<br>' + '<button id="slet" onclick="clickFunc()">Marker som løst</button>';
+                        mainContainer.appendChild(div);
+
+                        }                 
+
+                        document.getElementById("slet").addEventListener = ("click", clickFunc = function () {
+                        incidents.splice(incidents[i], 1);
+                        console.log(incidents);
+                        });
+
+
+                });
+                oReq.open("GET", "http://localhost/getIncidents.php");
+                oReq.send();
+            };
+            const doThis = function () {
+                headAndShoulders('Receive');
+                feet(2020);
+                readIncidents();
+            };
+
+            
+
+            window.addEventListener('load', doThis);
+        </script>
+    </head>
+    <body>
+        <header><h1 class='title'></h1></header>    <!-- autofilled -->
+        <main>
+            <section id='incidents'></section>
+            <div id="myData"></div>
+            <button id="slet"></button>
+            <p><a href='./index.html'>incidents</a></p>
+        </main>
+        <footer></footer>                           <!-- autofilled -->
+    </body>
+</html>
